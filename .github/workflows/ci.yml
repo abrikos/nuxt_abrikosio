@@ -1,4 +1,4 @@
-name: Django CI
+name: Nuxt CI
 
 on: [ push ]
 
@@ -38,7 +38,7 @@ jobs:
             git pull
             ls -l
             npm i
-            npm run build
+            npm run generate
 
 #If you are using Github action, you have local PC for development, you access Github via ssh and you have a remote server where you want to deploy your code, following steps might apply to you.
 #
