@@ -2,12 +2,14 @@
 import MarkdownIt from 'markdown-it';
 import { computed } from 'vue';
 
-const {text} = defineProps<{ text: string }>()
+const {text} = defineProps<{ text?: string }>()
 
 const md = new MarkdownIt();
 
 const renderedMarkdown = computed(() => {
-  return md.render(text);
+  if (text) {
+    return md.render(text);
+  }
 });
 </script>
 
