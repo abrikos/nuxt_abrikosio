@@ -18,7 +18,7 @@ const avatar = computed(() => {
 <template lang="pug">
     q-avatar(v-if="key")
       img(:src="avatar")
-      q-tooltip {{props.user.display_name}}
+      q-tooltip {{props.user.nickname}}
 </template>
 
 <style scoped lang="sass">

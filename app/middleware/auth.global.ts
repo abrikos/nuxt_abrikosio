@@ -3,7 +3,6 @@ import {useCustomStore} from '~/store/custom-store';
 export default defineNuxtRouteMiddleware(async (to, from) => {
     const {checkAuth, setRedirect, redirect} = useCustomStore();
     const pagesWithAuth = ['post', 'user-cabinet',]
-    console.log(to.name)
     const loggedUser = await checkAuth()
     if (pagesWithAuth.includes(to.name as string)) {
         if(!loggedUser) {
@@ -11,7 +10,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
             return navigateTo('/user/login');
         }
     } else if (redirect) {
-        console.log('zzzzzzz', redirect)
         return redirect;
     }
 });

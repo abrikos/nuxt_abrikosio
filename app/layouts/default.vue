@@ -16,6 +16,12 @@
           q-item-section
             q-item-label {{ link.title }}
             q-item-label( caption) {{ link.caption }}
+        q-item(v-if="loggedUser" clickable tag="a"  to="/user/cabinet")
+          q-item-section(avatar)
+            user-avatar(:user="loggedUser")
+          q-item-section
+            q-item-label {{ loggedUser.nickname }}
+            q-item-label( caption) Cabinet
     q-page-container
       slot
     //q-footer
@@ -65,13 +71,6 @@ const menuItems = computed(() => {
       caption: '',
       icon: 'mdi-logout',
       link: '/user/logout',
-      show: loggedUser.value
-    },
-    {
-      title: loggedUser.value?.email,
-      caption: 'Cabinet',
-      icon: 'mdi-edit',
-      link: '/user/cabinet',
       show: loggedUser.value
     },
     {
