@@ -16,7 +16,8 @@ async function updateUser(deleteAvatar:boolean) {
 }
 
 async function setAvatar(file: string) {
-  const res = await useNuxtApp().$UPLOAD(`/user/${loggedUser.value?.id}/set_avatar/`, file);
+  console.log(file)
+  const res = await useNuxtApp().$UPLOAD(`/user/${loggedUser.value?.id}/set_avatar/`, [file]);
   $event('avatar-reload')
 }
 
@@ -37,10 +38,14 @@ async function setAvatar(file: string) {
     q-toolbar
       q-toolbar-title Avatar
     q-card-section
-      user-avatar(:user="loggedUser")
-      q-btn(@click="updateUser(true)") Delete
-      q-uploader(url="" @added="setAvatar")
 
+
+      //q-uploader(url="" @added="setAvatar")
+      q-file(@update:model-value="setAvatar" label="Choose avatar" )
+        template(v-slot:after)
+          q-btn(@click="updateUser(true)" icon="mdi-delete" color="red" )
+        template(v-slot:before)
+          user-avatar(:user="loggedUser")
 </template>
 
 <style scoped>

@@ -80,7 +80,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
                 //await new Promise(resolve => setTimeout(resolve, 5000));
                 if (debug) console.log('POST', path, body);
                 await refresh()
-                const res = await instance.post(apiPath + path, body, {headers: getHeaders()})
+                const res = await instance.post(path, body, {headers: getHeaders()})
                 if (res && debug && showResponse) console.log('POST response:', path, res)
                 unsetLoading()
                 return res
@@ -88,7 +88,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
             async UPLOAD(path: string, body?: any) {
                 setLoading()
                 //await new Promise(resolve => setTimeout(resolve, 5000));
-                if (debug) console.log('POST', path, body);
+                if (debug) console.log('UPLOAD', path, body);
                 await refresh()
                 const res = await instance.post(path,    body, {headers: getHeaders('multipart/form-data')})
                 if (res && debug && showResponse) console.log('POST response:', path, res)

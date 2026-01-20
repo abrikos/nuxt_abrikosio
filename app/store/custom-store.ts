@@ -25,7 +25,7 @@ export const useCustomStore = defineStore('auth', {
 
 
         async login(credentials: UserPayloadInterface) {
-            const token = await useNuxtApp().$POST(`/token/`, credentials) as { access: string };
+            const token = await useNuxtApp().$POST(`/token/`, credentials) as unknown as {access:string}
             if (!token) return;
             const config = useRuntimeConfig()
             const cookie = useCookie(config.public.authTokenName)
@@ -36,7 +36,7 @@ export const useCustomStore = defineStore('auth', {
             }
         },
         async signup(credentials: UserPayloadInterface) {
-            const user = await useNuxtApp().$POST('/user/', credentials) as { errors: object };
+            const user = await useNuxtApp().$POST('/user/', credentials) as unknown as { errors: object };
             if (user && !user.errors) {
                 await this.login(credentials);
             }
