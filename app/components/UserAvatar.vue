@@ -2,16 +2,20 @@
 interface Props {
   user: object;
 }
-const props = withDefaults(defineProps<Props>(), {
-  user: () => ({}),
-});
+const props = defineProps<Props>()
+const {$listen} = useNuxtApp()
+const key = ref(Math.random().toString(36))
+$listen('avatar-reload', ()=>{
+  console.log('fffffffffffffffffffffffffff')
+  key.value = Math.random().toString(36)
+})
 </script>
 
 <template lang="pug">
 
-  q-avatar
-    img(:src="props.user.avatar || '/static/no-avatar.png'")
-    q-tooltip {{props.user.display_name}}
+  q-avatar(:key="key")
+    img(:src="props.user.avatar+`?${key}` || '/static/no-avatar.png'" )
+    q-tooltip {{props.user.display_name}} {{key}}
 
 </template>
 

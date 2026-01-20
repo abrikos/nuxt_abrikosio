@@ -1,0 +1,29 @@
+<script setup lang="ts">
+import {useCustomStore} from "~/store/custom-store";
+
+const {loggedUser} = storeToRefs(useCustomStore())
+const credentials = ref({})
+const errors = ref({})
+const $q = useQuasar()
+async function setPassword() {
+  if (!loggedUser.value) return;
+  const res = await useNuxtApp().$PATCH(`/user/${loggedUser.value.id}/set_password/`, credentials.value);
+  if(!res?.errors) {
+    $q.notify({message: 'Password changed', color: 'green'});
+  }else{
+    errors.value = res.errors
+  }
+}
+
+</script>
+
+<template lang="pug">
+  q-form(@submit="setPassword")
+    password-confirmation(v-model="credentials" :errors="errors")
+    q-btn(type="submit" color="primary" ) Set new password
+
+</template>
+
+<style scoped>
+
+</style>

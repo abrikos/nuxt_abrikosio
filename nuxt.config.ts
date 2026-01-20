@@ -30,7 +30,6 @@ export default defineNuxtConfig({
         },
         QBtn: {
           dense: true,
-          flat: true,
           noCaps: true
         },
         QSelect: {

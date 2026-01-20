@@ -1,23 +1,19 @@
 import {useCustomStore} from '~/store/custom-store'
 import moment from "moment";
 import {useQuasar} from 'quasar'
-
+import axios from 'axios'
 
 export default defineNuxtPlugin((_nuxtApp) => {
     const config = useRuntimeConfig()
     const $q = useQuasar()
     const {logout, setLoading, unsetLoading} = useCustomStore()
 
-    function getHeaders<HeadersInit>(ct?: string | undefined) {
+    function getHeaders(ct?: string | undefined) {
         const token = useCookie(config.public.authTokenName)
-        const myHeaders = new Headers();
-        if (typeof ct === "string") {
-            myHeaders.append('Content-Type', ct);
+        return {
+            Authorization: token.value ? `Bearer ${token.value}` :  '',
+            'Content-Type': ct
         }
-        if (token.value) {
-            myHeaders.append('Authorization', `Bearer ${token.value}`);
-        }
-        return myHeaders
     }
 
 
@@ -51,6 +47,29 @@ export default defineNuxtPlugin((_nuxtApp) => {
         // }
     }
 
+    const instance = axios.create({
+        baseURL: '/api',
+    });
+    instance.interceptors.response.use(
+        (res) => {
+            //console.log(res.config.method, ':', res.config.url, res.data);
+            return res.data;
+        },
+        (e) => {
+            if (e.response?.status === 401) {
+                return;
+            }
+            $q.notify({
+                color: 'negative',
+                icon: 'mdi-alert-circle',
+                message: e.status + ': ' + JSON.stringify(e.response.data.error),
+                position: 'top',
+            })
+            return { errors: e.response.data }
+        },
+    );
+
+
     const debug = true
     const showResponse = false
     const apiPath = '/api'
@@ -61,8 +80,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
                 //await new Promise(resolve => setTimeout(resolve, 5000));
                 if (debug) console.log('POST', path, body);
                 await refresh()
-                const res = await $fetch(apiPath + path, {method: 'POST', body, headers: getHeaders()})
-                    .catch(onError)
+                const res = await instance.post(apiPath + path, body, {headers: getHeaders()})
                 if (res && debug && showResponse) console.log('POST response:', path, res)
                 unsetLoading()
                 return res
@@ -72,12 +90,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
                 //await new Promise(resolve => setTimeout(resolve, 5000));
                 if (debug) console.log('POST', path, body);
                 await refresh()
-                const res = await $fetch(apiPath + path, {
-                    method: 'POST',
-                    body,
-                    headers: getHeaders('multipart/form-data')
-                })
-                    .catch(onError)
+                const res = await instance.post(path,    body, {headers: getHeaders('multipart/form-data')})
                 if (res && debug && showResponse) console.log('POST response:', path, res)
                 unsetLoading()
                 return res
@@ -87,8 +100,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
                 //await new Promise(resolve => setTimeout(resolve, 5000));
                 if (debug) console.log('PATCH', path, body);
                 await refresh()
-                const res = await $fetch(apiPath + path, {method: 'PATCH', body, headers: getHeaders()})
-                    .catch(onError)
+                const res = await instance.patch(path,  body, {headers: getHeaders()})
                 if (res && debug && showResponse) console.log('PATCH response:', path, res)
                 unsetLoading()
                 return res
@@ -97,8 +109,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
                 setLoading()
                 if (debug) console.log('PUT', path, body);
                 await refresh()
-                const res = await $fetch(apiPath + path, {method: 'PUT', body, headers: getHeaders()})
-                    .catch(onError)
+                const res = await instance.put(path,  body, {headers: getHeaders()})
                 if (res && debug && showResponse) console.log('PUT response:', path, res)
                 unsetLoading()
                 return res
@@ -107,8 +118,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
                 setLoading()
                 await refresh()
                 if (debug) console.log('GET', path);
-                let res = await $fetch(apiPath + path, {method: 'GET', headers: getHeaders()})
-                    .catch(onError)
+                let res = await instance.get(path, {headers: getHeaders()})
                 if (res && debug && showResponse) console.log('GET response:', path, res)
                 unsetLoading()
                 return res
@@ -117,8 +127,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
                 setLoading()
                 await refresh()
                 if (debug) console.log('DEL', path);
-                const res = await $fetch(apiPath + path, {method: 'DELETE', headers: getHeaders()})
-                    .catch(onError)
+                const res = await instance.delete(path, {headers: getHeaders()})
                 if (res && debug && showResponse) console.log('DEL response:', path, res)
                 unsetLoading()
                 return res
