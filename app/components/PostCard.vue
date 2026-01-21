@@ -2,14 +2,14 @@
 
 import {useCustomStore} from "~/store/custom-store";
 
-const {loggedUser} = storeToRefs(useCustomStore())
+const {loggedUser} = useCustomStore()
 const {post} = defineProps<{ post: object }>()
 
 </script>
 
 <template lang="pug">
 div.post-card
-  q-card.q-ma-sm.bg-grey-4(@click="navigateTo(`/post/edit-${post.id}`)")
+  q-card.q-ma-sm.bg-grey-4(@click="navigateTo(`/post/${post.id}`)")
     div.q-pa-sm.flex.items-center.justify-between.no-wrap(color="primary")
       q-btn(size="sm" icon="mdi-pencil" v-if="loggedUser?.id === post.user.id" :to="`/post/edit-${post.id}`" flat)
       div
