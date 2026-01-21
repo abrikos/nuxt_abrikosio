@@ -9,13 +9,14 @@ const {post} = defineProps<{ post: object }>()
 
 <template lang="pug">
 div.post-card
-  q-card.q-ma-sm.bg-grey-4
+  q-card.q-ma-sm.bg-grey-4(@click="navigateTo(`/post/edit-${post.id}`)")
     div.q-pa-sm.flex.items-center.justify-between.no-wrap(color="primary")
       q-btn(size="sm" icon="mdi-pencil" v-if="loggedUser?.id === post.user.id" :to="`/post/edit-${post.id}`" flat)
       div
-        router-link(:to="`/post/${post.id}`" flat no-caps) {{ post.title }}
+        span.text-blue  {{ post.title }}
         div
-          small {{ post.date }}
+          small
+            i {{ post.date }}
       q-space
       q-avatar
         user-avatar(:user="post.user")
@@ -30,6 +31,7 @@ div.post-card
 
 <style scoped lang="sass">
 .post-card
+  cursor: pointer
   width: 300px
   max-height: 200px
 .text
