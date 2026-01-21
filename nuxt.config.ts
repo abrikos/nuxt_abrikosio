@@ -9,6 +9,7 @@ export default defineNuxtConfig({
       authExpiration: 3600 * 24 * 30,
       authRefreshBeforeExpiration: 3000,
       authTokenName: 'auth_token',
+      authPages:['user-cabinet','post-create','post-edit']
     }
   },
   devServer: {

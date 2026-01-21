@@ -3,6 +3,8 @@ import {defineStore} from 'pinia';
 export interface UserPayloadInterface {
     email?: string;
     password?: string;
+    errors?: string;
+    avatar?: string;
 
 }
 
@@ -43,8 +45,8 @@ export const useCustomStore = defineStore('auth', {
             return user;
         },
         async checkAuth() {
-            const user = await useNuxtApp().$GET('/user/auth') as UserPayloadInterface;
-            if (user) {
+            const user = await useNuxtApp().$GET('/user/auth') as UserPayloadInterface as UserPayloadInterface;
+            if (user && !user.errors) {
                 this.loggedUser = user;
                 return this.loggedUser;
             } else {

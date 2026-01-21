@@ -1,8 +1,8 @@
 <script setup lang="ts">
 interface Props {
-  user: object;
+  user?: object;
 }
-const props = defineProps<Props>()
+const {user} = defineProps<Props>()
 const {$listen} = useNuxtApp()
 const key = ref(Math.random().toString(36))
 $listen('avatar-reload', ()=>{
@@ -10,15 +10,15 @@ $listen('avatar-reload', ()=>{
 })
 
 const avatar = computed(() => {
-  return props.user.avatar ? props.user.avatar + `?${key.value}` : '/static/no-avatar.png'
+  return user?.avatar ? user.avatar + `?${key.value}` : '/static/no-avatar.png'
 })
 
 </script>
 
 <template lang="pug">
-    q-avatar(v-if="key")
+    q-avatar(v-if="user")
       img(:src="avatar")
-      q-tooltip {{props.user.nickname}}
+      q-tooltip {{user?.nickname}}
 </template>
 
 <style scoped lang="sass">

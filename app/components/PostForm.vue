@@ -1,27 +1,72 @@
 <script setup lang="ts">
-const {post} = defineProps<{ post: object }>()
+import {useCustomStore} from "~/store/custom-store";
+
+const route = useRoute()
+const $q = useQuasar()
+const {loggedUser} = storeToRefs(useCustomStore())
+const post = ref({})
+
+async function load() {
+  if (!route.params.id) return
+  post.value = await useNuxtApp().$GET('/post/' + route.params.id)
+  if (!post.value || !post.value.id) {
+    navigateTo('/')
+  }
+}
+
+onMounted(load)
+const errors = ref({})
+async function onSubmit() {
+  if (!loggedUser.value) return;
+  let res
+  if (route.params.id) {
+    res = await useNuxtApp().$PATCH(`/post/${route.params.id}/`, post.value)
+  } else {
+    res = await useNuxtApp().$POST(`/post/`, post.value)
+  }
+  if (!res.errors) {
+    $q.notify({message: 'Success', color: 'green'});
+    if(!route.params.id) {
+      navigateTo(`/post/edit-${res.id}`)
+    }
+  }else{
+    errors.value = res.errors
+  }
+
+}
+
 </script>
 
 <template lang="pug">
-  q-input(v-model="post.title" label="Title")
-  q-input(v-model="post.poster" label="Poster image url" hint="Place link for any image")
-    template(v-slot:prepend)
-      q-icon(name="mdi-image")
-  q-input(v-model="post.short" label="Short" type="textarea"  filled autogrow)
+  div.row.q-gutter-md
+    div.col-sm.q-pa-lg
+      q-card
+        q-form(@submit="onSubmit")
+          q-card-section
+            q-input(v-model="post.title" label="Title" :error="!!errors.title" :error-message="errors.title?.join(',')")
+            q-input(v-model="post.poster" label="Poster image url" hint="Place link for any image")
+              template(v-slot:prepend)
+                q-icon(name="mdi-image")
+            q-input(v-model="post.short" label="Short" type="textarea"  filled autogrow  :error="!!errors.short" :error-message="errors.short?.join(',')")
 
 
-  q-input(v-model="post.body" label="Body (accepts markdown syntax)" type="textarea" filled autogrow)
-    template(v-slot:append)
+            q-input(v-model="post.body" label="Body (accepts markdown syntax)" type="textarea" filled autogrow)
+              template(v-slot:append)
 
-        q-icon(name="mdi-help")
-          q-popup-proxy
-            q-banner
-              a(href="https://skillbox.ru/media/code/yazyk-razmetki-markdown-shpargalka-po-sintaksisu-s-primerami/" target="_blank") Markdown syntax
-        q-tooltip Markdown syntax
-  div.row.items-center
-    div.col
-      q-toggle( v-model="post.published" label="Show for all")
-    div.col.text-right {{ post.date  }}
+                q-icon(name="mdi-help")
+                  q-popup-proxy
+                    q-banner
+                      a(href="https://skillbox.ru/media/code/yazyk-razmetki-markdown-shpargalka-po-sintaksisu-s-primerami/" target="_blank") Markdown syntax
+                q-tooltip Markdown syntax
+            div.row.items-center
+              div.col
+                q-toggle( v-model="post.published" label="Show for all")
+              div.col.text-right {{ post.date  }}
+
+          q-card-actions
+            q-btn(type="submit" color="primary" :flat="false" :label="route.params.id ? 'Save':'Create'")
+    div.col-sm
+      post-view(:post="post")
 
 
 </template>

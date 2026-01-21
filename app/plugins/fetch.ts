@@ -56,14 +56,19 @@ export default defineNuxtPlugin((_nuxtApp) => {
             return res.data;
         },
         (e) => {
-            if (e.response?.status === 401) {
+            if (e.status === 401) {
                 return;
             }
+            let message = e.status + ': ' +  JSON.stringify(e.response.data);
+            if([502].includes(e.status)){
+                message = e.response.statusText
+            }
+
             $q.notify({
                 color: 'negative',
                 icon: 'mdi-alert-circle',
-                message: e.status + ': ' + JSON.stringify(e.response.data.error),
-                position: 'top',
+                message,
+                position: 'center',
             })
             return {errors: e.response.data}
         },

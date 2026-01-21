@@ -18,9 +18,12 @@ async function setPassword() {
 </script>
 
 <template lang="pug">
+q-card
   q-form(@submit="setPassword")
-    password-confirmation(v-model="credentials" :errors="errors")
-    q-btn(type="submit" color="primary" ) Set new password
+    q-card-section
+      password-confirmation(v-model="credentials" :errors="errors")
+    q-card-actions
+      q-btn(type="submit" color="primary" ) Set new password
 
 </template>
 

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {useCustomStore} from "~/store/custom-store";
 
+const route = useRoute()
 const {$event} = useNuxtApp()
 const {loggedUser} = storeToRefs(useCustomStore())
 const {checkAuth} = useCustomStore()
@@ -8,7 +9,7 @@ const $q = useQuasar()
 async function updateUser(deleteAvatar:boolean) {
   if (!loggedUser.value) return;
   if(deleteAvatar){
-    loggedUser.value.avatar = null;
+    loggedUser.value.avatar = undefined;
   }
   const res = await useNuxtApp().$PATCH(`/user/${loggedUser.value.id}/`, loggedUser.value);
   if(!res.errors) {
@@ -18,18 +19,21 @@ async function updateUser(deleteAvatar:boolean) {
 
 async function setAvatar(file: string) {
   const res = await useNuxtApp().$UPLOAD(`/user/${loggedUser.value?.id}/set_avatar/`, [file]);
-  await checkAuth()
+  await checkAuth(route.name as string)
   $event('avatar-reload')
 }
 async function deleteAvatar(file: string) {
   const res = await useNuxtApp().$DELETE(`/user/${loggedUser.value?.id}/delete_avatar/`);
-  loggedUser.value.avatar = null;
-  $event('avatar-reload')
+  if(loggedUser.value) {
+    loggedUser.value.avatar = undefined;
+    $event('avatar-reload')
+  }
 }
 
 </script>
 
 <template lang="pug">
+div(v-if="loggedUser")
   q-card.q-mb-lg
     q-card-section
       q-form(@submit="updateUser()")
