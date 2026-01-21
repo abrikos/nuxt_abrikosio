@@ -8,19 +8,35 @@ const {post} = defineProps<{ post: object }>()
 </script>
 
 <template lang="pug">
-  q-card
-    q-toolbar
-      q-toolbar-title
-        q-avatar
-          user-avatar(:user="post.user")
-        q-btn(:to="`/post/${post.id}`" flat no-caps) {{ post.title }}
-    q-card-section(horizontal)
-      p.short {{post.short}}
-    q-card-actions.flex.justify-between
-      small {{ post.date }}
-      q-btn(size="sm" icon="mdi-edit" v-if="loggedUser?.id === post.user.id" :to="`/post/edit-${post.id}`")
+div.post-card
+  q-card.q-ma-sm.bg-grey-4
+    div.q-pa-sm.flex.items-center.justify-between.no-wrap(color="primary")
+      q-btn(size="sm" icon="mdi-pencil" v-if="loggedUser?.id === post.user.id" :to="`/post/edit-${post.id}`" flat)
+      div
+        router-link(:to="`/post/${post.id}`" flat no-caps) {{ post.title }}
+        div
+          small {{ post.date }}
+      q-space
+      q-avatar
+        user-avatar(:user="post.user")
+    q-separator(inset)
+    div.q-pa-sm.text.flex.justify-between.no-wrap
+      span {{post.short}}
+      div
+        img(:src="post.poster" v-if="post.poster")
+
 
 </template>
 
 <style scoped lang="sass">
+.post-card
+  width: 300px
+  max-height: 200px
+.text
+  overflow: hidden
+img
+  //float: left
+  margin: 10px
+  max-height: 100px
+  max-width: 100px
 </style>

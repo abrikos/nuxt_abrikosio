@@ -36,10 +36,6 @@ export default defineNuxtConfig({
           outlined: true,
           dense: true
         },
-        QInput: {
-          outlined: true,
-          dense: true
-        }
       }
     },
     iconSet: 'mdi-v7',

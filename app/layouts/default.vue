@@ -5,14 +5,13 @@
       q-toolbar
         q-btn( flat dense round icon="mdi-menu" aria-label="Menu" @click="toggleLeftDrawer" )
 
-        q-toolbar-title Quasar App
+        q-toolbar-title и.о. Абрикос
 
-    q-drawer(v-model="leftDrawerOpen" bordered side="right")
+    q-drawer(v-model="leftDrawerOpen" bordered side="left")
       q-list
-        q-item-label( header) Menu
         q-item(v-for="link in menuItems.filter(i=>i.show)" clickable tag="a"  :to="link.link")
           q-item-section(avatar)
-            q-icon(:name="link.icon")
+            q-icon(:name="link.icon" color="blue" )
           q-item-section
             q-item-label {{ link.title }}
             q-item-label( caption) {{ link.caption }}
@@ -48,21 +47,14 @@ const menuItems = computed(() => {
     {
       title: 'Home',
       caption: '',
-      icon: 'mdi-code',
+      icon: 'mdi-home',
       link: '/',
-      show: true
-    },
-    {
-      title: 'Blog',
-      caption: 'view posts',
-      icon: 'mdi-school',
-      link: '/blog',
       show: true
     },
     {
       title: 'Add post',
       caption: 'Create post',
-      icon: 'mdi-edit',
+      icon: 'mdi-pencil',
       link: '/post/create',
       show: loggedUser.value?.publisher
     },

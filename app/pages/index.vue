@@ -2,18 +2,17 @@
 
 const posts = ref([])
 async function load(){
-  posts.value = await useNuxtApp().$GET('/post') as never[];
+  posts.value = await useNuxtApp().$GET('/post')
 }
 
 onMounted(load)
 </script>
 
 <template lang="pug">
-div
+div.flex.justify-between
   div(v-for="post of posts")
     post-card(:post="post")
 </template>
 
-<style scoped>
-
+<style scoped lang="sass">
 </style>

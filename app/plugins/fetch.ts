@@ -11,7 +11,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
     function getHeaders(ct?: string | undefined) {
         const token = useCookie(config.public.authTokenName)
         return {
-            Authorization: token.value ? `Bearer ${token.value}` :  '',
+            Authorization: token.value ? `Bearer ${token.value}` : '',
             'Content-Type': ct
         }
     }
@@ -65,7 +65,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
                 message: e.status + ': ' + JSON.stringify(e.response.data.error),
                 position: 'top',
             })
-            return { errors: e.response.data }
+            return {errors: e.response.data}
         },
     );
 
@@ -77,7 +77,6 @@ export default defineNuxtPlugin((_nuxtApp) => {
         provide: {
             async POST(path: string, body?: any) {
                 setLoading()
-                //await new Promise(resolve => setTimeout(resolve, 5000));
                 if (debug) console.log('POST', path, body);
                 await refresh()
                 const res = await instance.post(path, body, {headers: getHeaders()})
@@ -90,7 +89,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
                 //await new Promise(resolve => setTimeout(resolve, 5000));
                 if (debug) console.log('UPLOAD', path, body);
                 await refresh()
-                const res = await instance.post(path,    body, {headers: getHeaders('multipart/form-data')})
+                const res = await instance.post(path, body, {headers: getHeaders('multipart/form-data')})
                 if (res && debug && showResponse) console.log('POST response:', path, res)
                 unsetLoading()
                 return res
@@ -100,7 +99,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
                 //await new Promise(resolve => setTimeout(resolve, 5000));
                 if (debug) console.log('PATCH', path, body);
                 await refresh()
-                const res = await instance.patch(path,  body, {headers: getHeaders()})
+                const res = await instance.patch(path, body, {headers: getHeaders()})
                 if (res && debug && showResponse) console.log('PATCH response:', path, res)
                 unsetLoading()
                 return res
@@ -109,7 +108,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
                 setLoading()
                 if (debug) console.log('PUT', path, body);
                 await refresh()
-                const res = await instance.put(path,  body, {headers: getHeaders()})
+                const res = await instance.put(path, body, {headers: getHeaders()})
                 if (res && debug && showResponse) console.log('PUT response:', path, res)
                 unsetLoading()
                 return res
