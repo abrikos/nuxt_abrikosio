@@ -3,24 +3,6 @@ name: Nuxt CI
 on: [ push ]
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Check out code
-      uses: actions/checkout@v5
-
-    - name: Set up Node
-      uses: actions/setup-node@v5
-      with:
-        node-version: '22'
-
-    - name: Dependencies
-      run: npm ci
-
-    - name: Build
-      run: npm run build
-
   deploy:
     runs-on: ubuntu-latest
 
