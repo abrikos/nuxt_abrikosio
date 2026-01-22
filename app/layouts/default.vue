@@ -5,7 +5,7 @@
       q-toolbar
         q-btn( flat dense round icon="mdi-menu" aria-label="Menu" @click="toggleLeftDrawer" )
 
-        q-toolbar-title и.о. Абрикос
+        q-toolbar-title и.о. Абрикос222
 
     q-drawer(v-model="leftDrawerOpen" bordered side="left")
       q-list
