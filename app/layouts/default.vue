@@ -41,6 +41,12 @@
 <script setup lang="ts">
 import {useCustomStore} from "~/store/custom-store";
 
+const { proxy } = useScriptGoogleTagManager({
+  id: 'GTM-N6HSRSC9',
+  scriptInput: {
+    src: 'https://your-domain.com/gtm.js'
+  }
+})
 const router = useRouter();
 const {loggedUser, loading} = storeToRefs(useCustomStore())
 const sysinfo = ref({})

@@ -39,6 +39,7 @@ onMounted(load)
     Head
       Title {{ post.title }}
       Meta(name="og:title" content="My Amazing Site")
+      Meta(name="og:site_name" content="My site")
       Meta(name="og:description" content="My Amazing Site")
       Meta(name="description" content="My Amazing Site")
       Meta(name="og:image" :content="post.poster")
