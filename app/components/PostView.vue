@@ -5,14 +5,19 @@ const {post} = defineProps<{ post: object }>()
 </script>
 
 <template lang="pug">
-h1 {{ post.title }}
-div.flex.items-center.bg-grey-4
-  img(:src="post.poster" v-if="post.poster")
-  p {{post.short}}
-mark-down(:text="post.body")
-//p.body(v-html="post.markdown_body")
+div.q-pa-lg
+  h1 {{ post.title }}
+  div.bg-grey-4.q-pa-sm
+    img.poster(:src="post.poster" v-if="post.poster")
+    strong {{post.short}}
+  mark-down(:text="post.body")
+  //p.body(v-html="post.markdown_body")
 </template>
 
-<style scoped>
-
+<style scoped lang="sass">
+img
+  max-width: 300px
+  max-height: 300px
+img.poster
+  float: right
 </style>

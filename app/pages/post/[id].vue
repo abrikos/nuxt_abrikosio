@@ -27,11 +27,10 @@ onMounted(load)
     q-bar(dense)
       q-btn(size="sm" icon="mdi-pencil" v-if="loggedUser?.id === post.user.id" :to="`/post/edit-${post.id}`" flat)
       q-space
-      q-rating(v-model="rate" @click="submitRate" max="5" icon="mdi-star-outline" size="sm" icon-selected="mdi-star"  icon-half="mdi-star-half-full")
+      q-rating(v-model="rate" @click="submitRate" max="5" icon="mdi-star-outline" color="red" size="sm" icon-selected="mdi-star"  icon-half="mdi-star-half-full")
       q-space
       span {{post.date}}
     post-view(:post="post" v-if="post")
-    pre {{post}}
 </template>
 
 <style scoped>

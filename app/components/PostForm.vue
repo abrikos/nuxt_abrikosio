@@ -71,11 +71,18 @@ async function onReset() {
             q-btn(type="submit" color="primary" :flat="false" :label="route.params.id ? 'Save':'Create'")
             q-btn(type="reset" :flat="false" label="Reset" v-if="route.params.id")
     div.col-sm
-      post-view(:post="post")
+      router-link(:to="`/post/${route.params.id}`") View Post
+      div.preview
+        post-view(:post="post")
 
 
 </template>
 
-<style scoped>
+<style scoped lang="sass">
+.preview
+  border: 1px solid black
+  transform: scale(.7)
+  transform-origin: top left
+  //transition: scale 0.3s ease
 
 </style>
