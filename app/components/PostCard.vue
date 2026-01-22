@@ -17,6 +17,7 @@ div.post-card
         div
           small
             i {{ post.date }}
+        q-rating(v-model="post.rate" disable max="5" icon="mdi-star-outline" color="red" icon-selected="mdi-star"  icon-half="mdi-star-half-full")
       q-space
       q-avatar
         user-avatar(:user="post.user")

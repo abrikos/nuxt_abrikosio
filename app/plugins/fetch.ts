@@ -59,8 +59,8 @@ export default defineNuxtPlugin((_nuxtApp) => {
             if (e.status === 401) {
                 return;
             }
-            let message = e.status + ': ' +  JSON.stringify(e.response.data);
-            if([502].includes(e.status)){
+            let message = e.status + ': ' + JSON.stringify(e.response.data);
+            if ([502].includes(e.status)) {
                 message = e.response.statusText
             }
 
@@ -80,7 +80,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
     const apiPath = '/api'
     return {
         provide: {
-            async POST(path: string, body?: any) {
+            POST: async (path: string, body?: any): Promise<any> => {
                 setLoading()
                 if (debug) console.log('POST', path, body);
                 await refresh()
@@ -89,7 +89,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
                 unsetLoading()
                 return res
             },
-            async UPLOAD(path: string, body?: any) {
+            UPLOAD: async (path: string, body?: any): Promise<any> => {
                 setLoading()
                 //await new Promise(resolve => setTimeout(resolve, 5000));
                 if (debug) console.log('UPLOAD', path, body);
@@ -99,7 +99,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
                 unsetLoading()
                 return res
             },
-            async PATCH(path: string, body?: any) {
+            PATCH: async (path: string, body?: any): Promise<any> => {
                 setLoading()
                 //await new Promise(resolve => setTimeout(resolve, 5000));
                 if (debug) console.log('PATCH', path, body);
@@ -109,7 +109,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
                 unsetLoading()
                 return res
             },
-            async PUT(path: string, body?: any) {
+            PUT: async (path: string, body?: any): Promise<any> => {
                 setLoading()
                 if (debug) console.log('PUT', path, body);
                 await refresh()
@@ -118,7 +118,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
                 unsetLoading()
                 return res
             },
-            async GET(path: string) {
+            GET: async (path: string): Promise<any> => {
                 setLoading()
                 await refresh()
                 if (debug) console.log('GET', path);
@@ -127,7 +127,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
                 unsetLoading()
                 return res
             },
-            async DELETE(path: string) {
+            DELETE: async (path: string): Promise<any> => {
                 setLoading()
                 await refresh()
                 if (debug) console.log('DEL', path);
