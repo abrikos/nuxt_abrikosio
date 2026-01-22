@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import {useCustomStore} from "~/store/custom-store";
 
-useHead({
-  title: 'My App',
-  meta: [
-    { name: 'description', content: 'My amazing site.' },
-  ],
-  bodyAttrs: {
-    class: 'test',
-  },
-  script: [{ innerHTML: 'console.log(\'Hello world\')' }],
-})
+function  setHeaders() {
+  useHead({
+    title: post.value.title,
+    meta: [
+      {name: 'description', content: post.value.short},
+    ],
+    bodyAttrs: {
+      class: 'test',
+    },
+    script: [{innerHTML: 'console.log(\'Hello world\')'}],
+  })
+}
 
 const {loggedUser} = useCustomStore()
 const post = ref()
@@ -23,6 +25,7 @@ async function load() {
     return navigateTo('/')
   }
   rate.value = post.value.rate
+  setHeaders()
 }
 
 const submitRate = async () => {
