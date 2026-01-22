@@ -1,6 +1,17 @@
 <script setup lang="ts">
 import {useCustomStore} from "~/store/custom-store";
 
+useHead({
+  title: 'My App',
+  meta: [
+    { name: 'description', content: 'My amazing site.' },
+  ],
+  bodyAttrs: {
+    class: 'test',
+  },
+  script: [{ innerHTML: 'console.log(\'Hello world\')' }],
+})
+
 const {loggedUser} = useCustomStore()
 const post = ref()
 const route = useRoute()
