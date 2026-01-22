@@ -21,6 +21,9 @@
           q-item-section
             q-item-label {{ loggedUser.nickname }}
             q-item-label( caption) Cabinet
+      div(v-if="loggedUser?.publisher")
+        div Commit: {{sysinfo.git}}
+        div {{sysinfo.uptime}}
     q-page-container
       slot
     //q-footer
@@ -38,10 +41,14 @@
 <script setup lang="ts">
 import {useCustomStore} from "~/store/custom-store";
 
-
 const router = useRouter();
 const {loggedUser, loading} = storeToRefs(useCustomStore())
-
+const sysinfo = ref({})
+onMounted(()=>{
+  useNuxtApp().$GET('/sysinfo').then(res=>{
+    sysinfo.value = res
+  })
+})
 const menuItems = computed(() => {
   return [
     {
