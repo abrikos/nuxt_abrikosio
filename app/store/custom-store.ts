@@ -1,4 +1,5 @@
 import {defineStore} from 'pinia';
+import axios from '~/store/axios';
 
 export interface UserPayloadInterface {
     email?: string;
@@ -27,7 +28,7 @@ export const useCustomStore = defineStore('auth', {
 
 
         async login(credentials: UserPayloadInterface) {
-            const token = await useNuxtApp().$POST(`/token/`, credentials) as unknown as {access:string}
+            const token = await useNuxtApp().$POST(`/token/`, credentials) as unknown as { access: string }
             if (!token) return;
             const config = useRuntimeConfig()
             const cookie = useCookie(config.public.authTokenName)
@@ -45,14 +46,15 @@ export const useCustomStore = defineStore('auth', {
             return user;
         },
         async checkAuth() {
-            const user = await useNuxtApp().$GET('/user/auth') as UserPayloadInterface as UserPayloadInterface;
+            const token = useCookie('auth_token')
+            console.log('ffffffff', token)
+            const headers = {Authorization: token.value ? `Bearer ${token.value}` : token.value}
+            const user = await axios.get('/user/auth', {headers}) as UserPayloadInterface;
             if (user && !user.errors) {
                 this.loggedUser = user;
                 return this.loggedUser;
             } else {
-                const config = useRuntimeConfig()
-                const cookie = useCookie(config.public.authTokenName)
-                cookie.value = '';
+                //token.value = '';
             }
         },
         logout() {

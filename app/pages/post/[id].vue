@@ -2,15 +2,13 @@
 import {useCustomStore} from "~/store/custom-store";
 
 function  setHeaders() {
-  useHead({
+  useSeoMeta({
     title: post.value.title,
-    meta: [
-      {name: 'description', content: post.value.short},
-    ],
-    bodyAttrs: {
-      class: 'test',
-    },
-    script: [{innerHTML: 'console.log(\'Hello world\')'}],
+    ogTitle: 'My Amazing Site',
+    description: 'This is my amazing site, let me tell you all about it.',
+    ogDescription: 'This is my amazing site, let me tell you all about it.',
+    ogImage: post.value.poster,
+    twitterCard: 'summary_large_image',
   })
 }
 
@@ -37,6 +35,9 @@ onMounted(load)
 </script>
 
 <template lang="pug">
+  Head
+    Title ZZZZZZZZ
+    Meta(name="og:title" content="My Amazing Site")
   div(v-if="post")
     q-bar(dense)
       q-btn(size="sm" icon="mdi-pencil" v-if="loggedUser?.id === post.user.id" :to="`/post/edit-${post.id}`" flat)
