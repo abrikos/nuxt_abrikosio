@@ -2,6 +2,13 @@
 export default defineNuxtConfig({
   ssr: true,
   compatibilityDate: '2025-07-15',
+  scripts: {
+    registry: {
+      googleTagManager: {
+        id: 'GTM-N6HSRSC9'
+      }
+    }
+  },
   devtools: { enabled: true },
   runtimeConfig: {
     public: {
@@ -16,10 +23,7 @@ export default defineNuxtConfig({
     port: 9000,
     host:'abrikosio.local',
   },
-  modules: [
-    'nuxt-quasar-ui',
-    '@pinia/nuxt',
-  ],
+  modules: ['nuxt-quasar-ui', '@pinia/nuxt', '@nuxt/scripts'],
   quasar: {
     sassVariables: '~~/public/quazar.variables.sass',
     plugins:['Notify'],
