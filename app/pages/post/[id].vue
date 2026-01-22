@@ -7,6 +7,10 @@ const route = useRoute()
 const rate = ref(0)
 async function load() {
   post.value = await useNuxtApp().$GET('/post/' + route.params.id)
+  if(post.value.errors){
+    post.value=null
+    return navigateTo('/')
+  }
   rate.value = post.value.rate
 }
 

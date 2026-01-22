@@ -3,8 +3,17 @@
 import {useCustomStore} from "~/store/custom-store";
 
 const {loggedUser} = useCustomStore()
-const {post} = defineProps<{ post: object }>()
+const {$event} = useNuxtApp()
+const {post,cabinet} = defineProps<{ post: object, cabinet?:boolean }>()
 
+watch(()=>post.published, async (newValue) => {
+  return useNuxtApp().$PATCH(`/post/${post.id}/`, {published:post.published})
+})
+
+const deletePost = async (id: string) => {
+  await useNuxtApp().$DELETE(`/post/${post.id}/`)
+  $event('posts-load')
+}
 </script>
 
 <template lang="pug">
@@ -22,10 +31,20 @@ div.post-card
       q-avatar
         user-avatar(:user="post.user")
     q-separator(inset)
-    div.q-pa-sm.text.flex.justify-between.no-wrap
+    div.text.q-pa-sm.flex.justify-between.no-wrap
       span {{post.short}}
       div
         img(:src="post.poster" v-if="post.poster")
+    div.flex.justify-between(v-if="cabinet" :class="post.published? '':'bg-red-4'")
+      q-toggle( v-model="post.published" label="Show for all")
+      q-btn(icon="mdi-delete" flat @click.stop :color="post.published? 'red':''")
+        q-tooltip Удалить "{{post.title}}"
+        q-popup-proxy(cover transition-show="scale" transition-hide="scale")
+          q-banner Удалить "{{post.title}}"?
+            br
+            q-btn( @click.stop="deletePost(post.id)" label="OK" v-close-popup color="negative" )
+            q-btn( @click.stop label="Отмена" v-close-popup)
+
 
 
 </template>
@@ -34,9 +53,10 @@ div.post-card
 .post-card
   cursor: pointer
   width: 300px
-  max-height: 200px
+
 .text
   overflow: hidden
+  max-height: 100px
 img
   //float: left
   margin: 10px

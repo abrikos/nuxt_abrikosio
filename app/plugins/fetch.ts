@@ -68,7 +68,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
                 color: 'negative',
                 icon: 'mdi-alert-circle',
                 message,
-                position: 'center',
+                position: 'bottom-left',
             })
             return {errors: e.response.data}
         },
