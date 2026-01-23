@@ -18,7 +18,7 @@ export default defineNuxtConfig({
         { name: 'og:site_name', content: 'Abrikosio' },
         { name: 'og:description', content: 'Og description' },
         { name: 'og:url', content: 'https://abrikosio.ru/post/1' },
-        { name: 'og:image', content: 'https://cdn.quasar.dev/logo-v2/svg/logotype-dark.svg' },
+        { name: 'og:image', content: 'https://www.gravatar.com/avatar/79099480674f7b3aa4880d0a52513c82?s=64&d=identicon&r=PG' },
       ]
     }
   },
