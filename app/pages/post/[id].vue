@@ -38,6 +38,15 @@ onMounted(load)
 
 <template lang="pug">
   div(v-if="post")
+    Head
+      Title {{ post.title }}
+      Meta(name="og:title" :content="post.title")
+      Meta(name="og:description" :content="post.short")
+      Meta(name="description" :content="post.short")
+      Meta(name="og:image" :content="post.poster")
+      Meta(name="og:url" :content="`https://abrikosio.ru/post/${post.id}`")
+      Meta(name="og:type" content="article")
+
     q-bar(dense)
       q-btn(size="sm" icon="mdi-pencil" v-if="loggedUser?.id === post.user.id" :to="`/post/edit-${post.id}`" flat)
       q-space
