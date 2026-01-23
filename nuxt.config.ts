@@ -2,6 +2,23 @@
 export default defineNuxtConfig({
   ssr: false,
   compatibilityDate: '2025-07-15',
+  // scripts: {
+  //   registry: {
+  //     googleTagManager: {
+  //       id: 'GTM-N6HSRSC9'
+  //     }
+  //   }
+  // },
+  app:{
+    head: {
+      meta:[
+        { name: 'og:site_name', content: 'Abrikosio' },
+        { name: 'og:title', content: 'Blogs' },
+        { name: 'og:type', content: 'site' },
+        { name: 'og:image', content: 'https://abrikosio.ru/logo.png' },
+      ]
+    }
+  },
   devtools: { enabled: true },
   runtimeConfig: {
     public: {
