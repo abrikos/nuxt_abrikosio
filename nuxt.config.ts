@@ -12,10 +12,8 @@ export default defineNuxtConfig({
   app:{
     head: {
       meta:[
-        { name: 'description', content: 'Описание вашего сайта в Nuxt 3' },
         { name: 'og:site_name', content: 'Abrikosio' },
-        { name: 'og:description', content: 'Og description' },
-        { name: 'og:url', content: 'https://abrikosio.ru/post/1' },
+        { name: 'og:type', content: 'article' },
         { name: 'og:image', content: 'https://www.gravatar.com/avatar/79099480674f7b3aa4880d0a52513c82?s=64&d=identicon&r=PG' },
       ]
     }
