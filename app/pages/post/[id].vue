@@ -4,7 +4,7 @@ import {useCustomStore} from "~/store/custom-store";
 function  setHeaders() {
   useSeoMeta({
     title: post.value.title,
-    ogTitle: 'My Amazing Site',
+    ogTitle: 'use seo meta',
     description: 'This is my amazing site, let me tell you all about it.',
     ogDescription: 'This is my amazing site, let me tell you all about it.',
     ogImage: post.value.poster,
@@ -38,7 +38,7 @@ onMounted(load)
   div(v-if="post")
     Head
       Title {{ post.title }}
-      Meta(name="og:title" content="My Amazing Site")
+      //Meta(name="og:title" content="Component Meta")
       Meta(name="og:site_name" content="My site")
       Meta(name="og:description" content="My Amazing Site")
       Meta(name="description" content="My Amazing Site")
