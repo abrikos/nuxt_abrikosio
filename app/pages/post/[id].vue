@@ -23,7 +23,7 @@ async function load() {
     return navigateTo('/')
   }
   rate.value = post.value.rate
-  setHeaders()
+  //setHeaders()
 }
 
 const submitRate = async () => {
