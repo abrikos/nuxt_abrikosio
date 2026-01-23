@@ -9,19 +9,6 @@ export default defineNuxtConfig({
       }
     }
   },
-  app:{
-    head: {
-      title:'Nuxt config',
-      meta:[
-        { name: 'description', content: 'Описание вашего сайта в Nuxt 3' },
-        { name: 'og:title', content: 'Og title' },
-        { name: 'og:site_name', content: 'Abrikosio' },
-        { name: 'og:description', content: 'Og description' },
-        { name: 'og:url', content: 'https://abrikosio.ru/post/1' },
-        { name: 'og:image', content: 'https://cdn.quasar.dev/logo-v2/svg/logotype-dark.svg' },
-      ]
-    }
-  },
   devtools: { enabled: true },
   runtimeConfig: {
     public: {
