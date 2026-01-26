@@ -27,32 +27,32 @@ export const useCustomStore = defineStore('auth', {
 
 
         async login(credentials: UserPayloadInterface) {
-            const token = await useNuxtApp().$POST(`/token/`, credentials) as unknown as {access:string}
+            const token = await useNuxtApp().$POST(`/auth/login`, credentials) as unknown as {access_token:string}
             if (!token) return;
             const config = useRuntimeConfig()
             const cookie = useCookie(config.public.authTokenName)
-            cookie.value = token.access
-            if (await this.checkAuth()) {
+            cookie.value = token.access_token
+            if (await this.getMe()) {
                 navigateTo(this.redirect)
                 //navigateTo('/user/cabinet')
             }
         },
         async signup(credentials: UserPayloadInterface) {
-            const user = await useNuxtApp().$POST('/user/', credentials) as unknown as { errors: object };
+            const user = await useNuxtApp().$POST('/auth/registration', credentials) as unknown as { errors: object };
             if (user && !user.errors) {
                 await this.login(credentials);
             }
             return user;
         },
-        async checkAuth() {
-            const user = await useNuxtApp().$GET('/user/auth') as UserPayloadInterface as UserPayloadInterface;
+        async getMe() {
+            const user = await useNuxtApp().$GET('/auth/me') as UserPayloadInterface as UserPayloadInterface;
             if (user && !user.errors) {
                 this.loggedUser = user;
                 return this.loggedUser;
             } else {
-                const config = useRuntimeConfig()
-                const cookie = useCookie(config.public.authTokenName)
-                cookie.value = '';
+                // const config = useRuntimeConfig()
+                // const cookie = useCookie(config.public.authTokenName)
+                // cookie.value = '';
             }
         },
         logout() {

@@ -8,7 +8,7 @@ const post = ref({})
 
 async function load() {
   if (!route.params.id) return
-  post.value = await useNuxtApp().$GET('/post/' + route.params.id)
+  post.value = await useNuxtApp().$GET('/posts/' + route.params.id)
   if (!post.value || !post.value.id) {
     navigateTo('/')
   }
@@ -20,9 +20,9 @@ async function onSubmit() {
   if (!loggedUser.value) return;
   let res
   if (route.params.id) {
-    res = await useNuxtApp().$PATCH(`/post/${route.params.id}/`, post.value)
+    res = await useNuxtApp().$PATCH(`/posts/${route.params.id}`, post.value)
   } else {
-    res = await useNuxtApp().$POST(`/post/`, post.value)
+    res = await useNuxtApp().$POST(`/posts`, post.value)
   }
   if (!res.errors) {
     $q.notify({message: 'Success', color: 'green'});

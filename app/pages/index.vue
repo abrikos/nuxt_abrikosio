@@ -2,7 +2,7 @@
 
 const posts = ref([])
 async function load(){
-  posts.value = await useNuxtApp().$GET('/post')
+  posts.value = await useNuxtApp().$GET('/posts')
 }
 
 onMounted(load)

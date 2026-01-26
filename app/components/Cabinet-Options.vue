@@ -4,7 +4,7 @@ import {useCustomStore} from "~/store/custom-store";
 const route = useRoute()
 const {$event} = useNuxtApp()
 const {loggedUser} = storeToRefs(useCustomStore())
-const {checkAuth} = useCustomStore()
+const {getMe} = useCustomStore()
 const $q = useQuasar()
 async function updateUser(deleteAvatar:boolean) {
   if (!loggedUser.value) return;
@@ -19,7 +19,7 @@ async function updateUser(deleteAvatar:boolean) {
 
 async function setAvatar(file: string) {
   const res = await useNuxtApp().$UPLOAD(`/user/${loggedUser.value?.id}/set_avatar/`, [file]);
-  await checkAuth(route.name as string)
+  await getMe(route.name as string)
   $event('avatar-reload')
 }
 async function deleteAvatar(file: string) {

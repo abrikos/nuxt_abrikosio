@@ -19,7 +19,7 @@ const post = ref()
 const route = useRoute()
 const rate = ref(0)
 async function load() {
-  post.value = await useNuxtApp().$GET('/post/' + route.params.id)
+  post.value = await useNuxtApp().$GET('/posts/' + route.params.id)
   if(post.value.errors){
     post.value=null
     return navigateTo('/')
@@ -29,7 +29,7 @@ async function load() {
 }
 
 const submitRate = async () => {
-  await useNuxtApp().$POST('/post/rate/', {value: rate.value, post: post.value.id})
+  await useNuxtApp().$POST('/posts/rate', {value: rate.value, post_id: post.value.id})
   await load()
 }
 
