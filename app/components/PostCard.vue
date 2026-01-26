@@ -7,11 +7,11 @@ const {$event} = useNuxtApp()
 const {post,cabinet} = defineProps<{ post: object, cabinet?:boolean }>()
 
 watch(()=>post.published, async (newValue) => {
-  return useNuxtApp().$PATCH(`/post/${post.id}/`, {published:post.published})
+  return useNuxtApp().$PATCH(`/posts/${post.id}`, {published:post.published})
 })
 
 const deletePost = async (id: string) => {
-  await useNuxtApp().$DELETE(`/post/${post.id}/`)
+  await useNuxtApp().$DELETE(`/posts/${post.id}`)
   $event('posts-load')
 }
 </script>

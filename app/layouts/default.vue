@@ -21,9 +21,8 @@
           q-item-section
             q-item-label {{ loggedUser.nickname }}
             q-item-label( caption) Cabinet
-      div(vif="loggedUser?.publisher")
+      div(v-if="loggedUser?.is_admin")
         div Commit: {{git}}
-        div zzzzzz
     q-page-container
       slot
     //q-footer

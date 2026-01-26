@@ -25,7 +25,7 @@ export default defineNuxtConfig({
       devMode: process.env.NODE_ENV !== 'production',
       authExpiration: 3600 * 24 * 30,
       authRefreshBeforeExpiration: 3000,
-      authTokenName: 'auth_token',
+      authTokenName: 'access_token',
       authPages:['user-cabinet','post-create','post-edit']
     }
   },
