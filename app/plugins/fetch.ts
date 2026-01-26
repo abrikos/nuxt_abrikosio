@@ -41,7 +41,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
         },
         (e) => {
             if (e.status === 401) {
-                return;
+                return e.response.data
             }
             let message = e.status + ': ' + JSON.stringify(e.response.data);
             if ([502].includes(e.status)) {

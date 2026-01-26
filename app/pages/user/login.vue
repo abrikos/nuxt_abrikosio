@@ -3,11 +3,21 @@ import {useCustomStore} from '~/store/custom-store';
 
 const {loggedUser, login} = useCustomStore()
 const config = useRuntimeConfig()
-
+const $q = useQuasar()
 const user = ref(config.app.buildId==='dev' ? {email: 'abrikoz@gmail.com', password: '1'}:{email: '', password: ''})
-
+const error = ref()
 async function submit() {
-  await login(user.value)
+  error.value = await login(user.value)
+  if(error.value.error){
+    $q.notify({
+      color: 'negative',
+      icon: 'mdi-alert-circle',
+      message: error.value.error,
+      position: 'bottom-left',
+      timeout: 0
+    })
+
+  }
 }
 onMounted(()=>{
   if(loggedUser) {navigateTo('/user/cabinet')}
