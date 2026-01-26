@@ -29,13 +29,7 @@ export const useCustomStore = defineStore('auth', {
         async login(credentials: UserPayloadInterface) {
             const token = await useNuxtApp().$POST(`/auth/login`, credentials) as unknown as {access_token:string}
             if (!token) return;
-            const config = useRuntimeConfig()
-            const cookie = useCookie(config.public.authTokenName)
-            cookie.value = token.access_token
-            if (await this.getMe()) {
-                navigateTo(this.redirect)
-                //navigateTo('/user/cabinet')
-            }
+            navigateTo(this.redirect)
         },
         async signup(credentials: UserPayloadInterface) {
             const user = await useNuxtApp().$POST('/auth/registration', credentials) as unknown as { errors: object };
@@ -49,10 +43,6 @@ export const useCustomStore = defineStore('auth', {
             if (user && !user.errors) {
                 this.loggedUser = user;
                 return this.loggedUser;
-            } else {
-                // const config = useRuntimeConfig()
-                // const cookie = useCookie(config.public.authTokenName)
-                // cookie.value = '';
             }
         },
         logout() {
@@ -60,35 +50,7 @@ export const useCustomStore = defineStore('auth', {
             const config = useRuntimeConfig()
             const cookie = useCookie(config.public.authTokenName)
             cookie.value = '';
-            console.log(this.loggedUser)
         },
-
-
-        // async getUser(){
-        //     if (!this.loggedUser) {
-        //         this.loggedUser = await useNuxtApp().$GET('/user/auth') as object|undefined;
-        //     }
-        //     return this.loggedUser
-        // },
-        // async authenticateUser(body: UserPayloadInterface) {
-        //     const data = await useNuxtApp().$POST(`/token/`, body)
-        //     if (!data) return
-        //     const token = useCookie(config.public.authTokenName)
-        //     this.loggedUser = data
-        //     navigateTo(this.redirect)
-        // },
-        // async signupUser(body: UserPayloadInterface) {
-        //     const data: any = await useNuxtApp().$PUT(`/user/signup/`, body)
-        //     if (!data) return
-        //     this.loggedUser = await this.getUser()
-        //     navigateTo('/')
-        // },
-        // async logUserOut() {
-        //     const token = useCookie(config.public.authTokenName)
-        //     token.value = ''
-        //     this.loggedUser = undefined
-        //     navigateTo('/user/login')
-        // },
 
     },
 });
