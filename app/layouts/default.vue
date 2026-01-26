@@ -23,6 +23,7 @@
             q-item-label( caption) Cabinet
       div(vif="loggedUser?.publisher")
         div Commit: {{git}}
+        div zzzzzz
     q-page-container
       slot
     //q-footer
