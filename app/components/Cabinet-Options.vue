@@ -11,22 +11,9 @@ async function updateUser(deleteAvatar:boolean) {
   if(deleteAvatar){
     loggedUser.value.avatar = undefined;
   }
-  const res = await useNuxtApp().$PATCH(`/user/${loggedUser.value.id}/`, loggedUser.value);
+  const res = await useNuxtApp().$PATCH(`/users/${loggedUser.value.id}`, loggedUser.value);
   if(!res.errors) {
     $q.notify({message: 'Success', color: 'green'});
-  }
-}
-
-async function setAvatar(file: string) {
-  const res = await useNuxtApp().$UPLOAD(`/user/${loggedUser.value?.id}/set_avatar/`, [file]);
-  await getMe(route.name as string)
-  $event('avatar-reload')
-}
-async function deleteAvatar(file: string) {
-  const res = await useNuxtApp().$DELETE(`/user/${loggedUser.value?.id}/delete_avatar/`);
-  if(loggedUser.value) {
-    loggedUser.value.avatar = undefined;
-    $event('avatar-reload')
   }
 }
 
@@ -38,10 +25,14 @@ div(v-if="loggedUser")
     q-card-section
       q-form(@submit="updateUser()")
         q-input(v-model="loggedUser.nickname" label="Nick Name" )
+        q-input(v-model="loggedUser.avatar" label="Avatar" )
+          template(v-slot:after)
+            user-avatar(:user="loggedUser")
+
         q-card-actions(@submit="updateUser()")
           q-btn(type="submit" color="primary" ) Save
 
-  q-card
+  //q-card
     q-card-section
       q-file(@update:model-value="setAvatar" label="Choose avatar" outlined counter)
         template(v-slot:append)
