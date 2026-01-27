@@ -7,7 +7,6 @@ export default defineNuxtPlugin((_nuxtApp) => {
     const config = useRuntimeConfig()
     const $q = useQuasar()
     const {logout, setLoading, unsetLoading} = useCustomStore()
-
     function getHeaders(ct?: string | undefined) {
         const access_token = useCookie(config.public.authTokenName)
         return {
@@ -36,7 +35,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
 
     instance.interceptors.response.use(
         (res) => {
-            //console.log(res.config.method, ':', res.config.url, res.data);
+            process.dev && console.log(res.config.method, ':', res.config.url, res.data);
             return res.data;
         },
         (e) => {
@@ -71,7 +70,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
     );
 
 
-    const debug = true
+    const debug = process.dev
     const showResponse = false
     return {
         provide: {
