@@ -8,3 +8,5 @@ services:
     restart: unless-stopped
     # Optional: name the container
     container_name: nuxt_abrikosio
+    volumes:
+      - ./docker-nginx:/etc/nginx/conf.d

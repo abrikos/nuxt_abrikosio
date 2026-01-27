@@ -12,14 +12,12 @@ COPY . .
 
 # Run the generate command to create static files
 RUN npm run generate
-RUN ls -l
 
 # Stage 2: Serve the static files with Nginx
 FROM nginx:stable-alpine AS production
 
 # Copy the generated static files from the builder stage to the Nginx public directory
 COPY --from=builder /app/.output/public /usr/share/nginx/html
-COPY nginx-default.conf /etc/nginx/conf.d
 
 # Expose port 80 (default for Nginx)
 EXPOSE 80
