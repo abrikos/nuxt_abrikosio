@@ -13,12 +13,13 @@ export default defineNuxtConfig({
     head: {
       title: 'i.o.Abrikos',
       meta:[
-        { name: 'og:site_name', content: 'Abrikosio' },
-        { name: 'og:title', content: 'Blogs' },
-        { name: 'og:description', content: 'My blogs' },
+        { name: 'title', content: 'Abrikosio' },
+        { property: 'og:site_name', content: 'Abrikosio' },
+        { property: 'og:title', content: 'Blogs' },
+        { property: 'og:description', content: 'My blogs' },
         { name: 'description', content: 'My blogs' },
-        { name: 'og:type', content: 'site' },
-        { name: 'og:image', content: 'https://abrikosio.ru/logo.png' },
+        { property: 'og:type', content: 'site' },
+        { property: 'og:image', content: 'https://abrikosio.ru/logo.png' },
       ]
     }
   },
