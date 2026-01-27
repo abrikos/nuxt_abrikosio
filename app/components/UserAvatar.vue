@@ -10,19 +10,20 @@ $listen('avatar-reload', ()=>{
 })
 
 const avatar = computed(() => {
-  return user?.avatar ? user.avatar + `?${key.value}` : '/no-avatar.png'
+  return user?.avatar ? user.avatar : '/no-avatar.png'
 })
 
 </script>
 
 <template lang="pug">
-    q-avatar(v-if="user")
+    q-avatar(v-if="user" square)
       img(:src="avatar")
       q-tooltip {{user?.nickname}}
 </template>
 
 <style scoped lang="sass">
 img
+  border: 1px solid silver
   max-height: 100px
   object-fit: fill
 </style>
