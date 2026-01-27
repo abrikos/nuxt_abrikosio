@@ -5,7 +5,8 @@ export interface UserPayloadInterface {
     password?: string;
     error?: string;
     avatar?: string;
-
+    is_admin?: boolean;
+    publisher?: boolean;
 }
 
 export const useCustomStore = defineStore('auth', {
