@@ -40,7 +40,7 @@ export const useCustomStore = defineStore('auth', {
         },
         async getMe() {
             const user = await useNuxtApp().$GET('/auth/me') as UserPayloadInterface
-            if (user && !user.error) {
+            if (!user?.error) {
                 this.loggedUser = user;
                 return this.loggedUser;
             }
