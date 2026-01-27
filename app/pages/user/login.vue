@@ -8,16 +8,6 @@ const user = ref(config.app.buildId==='dev' ? {email: 'abrikoz@gmail.com', passw
 const error = ref()
 async function submit() {
   error.value = await login(user.value)
-  if(error.value.error){
-    $q.notify({
-      color: 'negative',
-      icon: 'mdi-alert-circle',
-      message: error.value.error,
-      position: 'bottom-left',
-      timeout: 0
-    })
-
-  }
 }
 onMounted(()=>{
   if(loggedUser) {navigateTo('/user/cabinet')}
@@ -29,7 +19,7 @@ function reset() {
 </script>
 
 <template lang="pug">
-q-card.q-pa-sm.fixed-center
+q-card.q-pa-sm
   q-toolbar
     q-toolbar-title Вход
   q-form(@submit="submit" @reset="reset")
@@ -43,6 +33,7 @@ q-card.q-pa-sm.fixed-center
         router-link(to="/user/registration") Зарегистрироваться
       div
         router-link(to="/user/password-restore") Восстановить пароль
+    q-card-section.text-red {{error?.error}}
 </template>
 
 <style scoped>
