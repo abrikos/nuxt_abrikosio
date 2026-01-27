@@ -41,7 +41,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
         },
         (e) => {
             if (e.status !== 401) {
-                let message = e.status + ': ' + JSON.stringify(e.response.data);
+                let message = e.status + ': ' + JSON.stringify(e.response.data.detail);
                 if ([502].includes(e.status)) {
                     message = e.response.statusText
                 }
@@ -53,7 +53,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
                     position: 'bottom-left',
                 })
             }
-            return {...e,...e.response.data}
+            return {...e, error: e.response.data?.detail}
         },
     );
 
