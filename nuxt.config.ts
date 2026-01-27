@@ -18,7 +18,7 @@ export default defineNuxtConfig({
         { property: 'og:title', content: 'Blogs' },
         { property: 'og:description', content: 'My blogs' },
         { name: 'description', content: 'My blogs' },
-        { property: 'og:type', content: 'site' },
+        { property: 'og:type', content: 'article' },
         { property: 'og:image', content: 'https://abrikosio.ru/logo.png' },
       ]
     }
