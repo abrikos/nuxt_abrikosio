@@ -7,7 +7,7 @@ const errors = ref({})
 const $q = useQuasar()
 async function setPassword() {
   if (!loggedUser.value) return;
-  const res = await useNuxtApp().$PATCH(`/users/${loggedUser.value.id}/set_password/`, credentials.value);
+  const res = await useNuxtApp().$PATCH(`/users/${loggedUser.value.id}`, credentials.value);
   if(!res?.error) {
     $q.notify({message: 'Password changed', color: 'green'});
   }else{

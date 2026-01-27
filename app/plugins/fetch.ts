@@ -36,22 +36,35 @@ export default defineNuxtPlugin((_nuxtApp) => {
 
     instance.interceptors.response.use(
         (res) => {
-            console.log(res.config.method, ':', res.config.url, res.data);
+            //console.log(res.config.method, ':', res.config.url, res.data);
             return res.data;
         },
         (e) => {
             if (e.status !== 401) {
-                let message = e.status + ': ' + JSON.stringify(e.response.data.detail);
-                if ([502].includes(e.status)) {
-                    message = e.response.statusText
-                }
+                if(Array.isArray(e.response.data.detail)) {
+                    for(const err of e.response.data.detail) {
+                        $q.notify({
+                            group: false,
+                            color: 'negative',
+                            icon: 'mdi-alert-circle',
+                            message:`${err.loc[1]}: ${err.msg}`,
+                            position: 'bottom-left',
+                        })
+                    }
+                }else{
+                    let message = e.status + ': ' + JSON.stringify(e.response.data.detail) + '\n zzzzzz';
+                    if ([502].includes(e.status)) {
+                        message = e.response.statusText
+                    }
 
-                $q.notify({
-                    color: 'negative',
-                    icon: 'mdi-alert-circle',
-                    message,
-                    position: 'bottom-left',
-                })
+                    $q.notify({
+                        color: 'negative',
+                        icon: 'mdi-alert-circle',
+                        message,
+                        position: 'bottom-left',
+                    })
+
+                }
             }
             return {...e, error: e.response.data?.detail}
         },

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const tab = ref('options')
+const tab = ref('password')
 const splitter = ref(20)
 </script>
 
