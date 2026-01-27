@@ -12,7 +12,7 @@ async function updateUser(deleteAvatar:boolean) {
     loggedUser.value.avatar = undefined;
   }
   const res = await useNuxtApp().$PATCH(`/users/${loggedUser.value.id}`, loggedUser.value);
-  if(!res.errors) {
+  if(!res.error) {
     $q.notify({message: 'Success', color: 'green'});
   }
 }
