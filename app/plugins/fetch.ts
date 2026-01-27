@@ -40,21 +40,20 @@ export default defineNuxtPlugin((_nuxtApp) => {
             return res.data;
         },
         (e) => {
-            if (e.status === 401) {
-                return e.response.data
-            }
-            let message = e.status + ': ' + JSON.stringify(e.response.data);
-            if ([502].includes(e.status)) {
-                message = e.response.statusText
-            }
+            if (e.status !== 401) {
+                let message = e.status + ': ' + JSON.stringify(e.response.data);
+                if ([502].includes(e.status)) {
+                    message = e.response.statusText
+                }
 
-            $q.notify({
-                color: 'negative',
-                icon: 'mdi-alert-circle',
-                message,
-                position: 'bottom-left',
-            })
-            return {errors: e.response.data}
+                $q.notify({
+                    color: 'negative',
+                    icon: 'mdi-alert-circle',
+                    message,
+                    position: 'bottom-left',
+                })
+            }
+            return {...e,...e.response.data}
         },
     );
 
