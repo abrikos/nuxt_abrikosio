@@ -19,7 +19,7 @@ FROM nginx:stable-alpine AS production
 
 # Copy the generated static files from the builder stage to the Nginx public directory
 COPY --from=builder /app/.output/public /usr/share/nginx/html
-COPY --from=builder /app/nginx-default.conf /etc/nginx/conf.d
+COPY /app/nginx-default.conf /etc/nginx/conf.d
 
 # Expose port 80 (default for Nginx)
 EXPOSE 80
