@@ -1,6 +1,7 @@
 import {defineStore} from 'pinia';
 
 export interface UserPayloadInterface {
+    id?: number;
     email?: string;
     password?: string;
     error?: string;
@@ -34,14 +35,14 @@ export const useCustomStore = defineStore('auth', {
         },
         async signup(credentials: UserPayloadInterface) {
             const user = await useNuxtApp().$POST('/auth/registration', credentials) as UserPayloadInterface
-            if (user && !user.error) {
+            if (user && user.id) {
                 await this.login(credentials);
             }
             return user;
         },
         async getMe() {
             const user = await useNuxtApp().$GET('/auth/me') as UserPayloadInterface
-            if (!user?.error) {
+            if (user?.id) {
                 this.loggedUser = user;
                 return this.loggedUser;
             }
