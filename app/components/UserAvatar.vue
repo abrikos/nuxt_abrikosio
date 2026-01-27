@@ -10,7 +10,7 @@ $listen('avatar-reload', ()=>{
 })
 
 const avatar = computed(() => {
-  return user?.avatar ? user.avatar + `?${key.value}` : '/static/no-avatar.png'
+  return user?.avatar ? user.avatar + `?${key.value}` : '/no-avatar.png'
 })
 
 </script>
