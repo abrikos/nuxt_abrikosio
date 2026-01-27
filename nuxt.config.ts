@@ -11,9 +11,12 @@ export default defineNuxtConfig({
   // },
   app:{
     head: {
+      title: 'i.o.Abrikos',
       meta:[
         { name: 'og:site_name', content: 'Abrikosio' },
         { name: 'og:title', content: 'Blogs' },
+        { name: 'og:description', content: 'My blogs' },
+        { name: 'description', content: 'My blogs' },
         { name: 'og:type', content: 'site' },
         { name: 'og:image', content: 'https://abrikosio.ru/logo.png' },
       ]
