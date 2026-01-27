@@ -4,7 +4,7 @@ import {useCustomStore} from "~/store/custom-store";
 
 const {loggedUser} = useCustomStore()
 const {$event} = useNuxtApp()
-const {post,cabinet} = defineProps<{ post: object, cabinet?:boolean }>()
+const {post} = defineProps<{ post: object }>()
 
 watch(()=>post.published, async (newValue) => {
   return useNuxtApp().$PATCH(`/posts/${post.id}`, {published:post.published})
@@ -14,13 +14,15 @@ const deletePost = async (id: string) => {
   await useNuxtApp().$DELETE(`/posts/${post.id}`)
   $event('posts-load')
 }
+
+const canEdit = computed(()=>loggedUser?.is_admin || loggedUser?.id === post.user_id  )
 </script>
 
 <template lang="pug">
 div.post-card
   q-card.q-ma-sm.bg-grey-4(@click="navigateTo(`/post/${post.id}`)")
     div.q-pa-sm.flex.items-center.justify-between.no-wrap(color="primary")
-      q-btn(size="sm" icon="mdi-pencil" v-if="loggedUser?.id === post.user.id" :to="`/post/edit-${post.id}`" flat)
+      q-btn(size="sm" icon="mdi-pencil" v-if="canEdit" :to="`/post/edit-${post.id}`" flat)
       div
         span.text-blue  {{ post.title }}
         div
@@ -35,7 +37,7 @@ div.post-card
       span {{post.short}}
       div
         img(:src="post.poster" v-if="post.poster")
-    div.flex.justify-between(v-if="cabinet" :class="post.published? '':'bg-red-4'")
+    div.flex.justify-between(v-if="canEdit" :class="post.published? '':'bg-red-4'")
       q-toggle( v-model="post.published" label="Show for all")
       q-btn(icon="mdi-delete" flat @click.stop :color="post.published? 'red':''")
         q-tooltip Удалить "{{post.title}}"
