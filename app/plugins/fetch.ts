@@ -51,11 +51,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
                         })
                     }
                 }else{
-                    let message = e.status + ': ' + JSON.stringify(e.response.data.detail) + '\n zzzzzz';
-                    if ([502].includes(e.status)) {
-                        message = e.response.statusText
-                    }
-
+                    const message = e.status + ': ' +  (e.status>=500 ? e.response.statusText :e.response.data.detail );
                     $q.notify({
                         color: 'negative',
                         icon: 'mdi-alert-circle',

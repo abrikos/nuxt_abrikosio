@@ -11,8 +11,6 @@ div.q-pa-lg
     img.poster(:src="post.poster" v-if="post.poster")
     strong {{post.short}}
   mark-down(:text="post.body")
-  div(v-html="post.body" )
-  iframe(src="https://disk.yandex.ru/i/N7iRC9Xj23_agg")
   //p.body(v-html="post.markdown_body")
 </template>
 

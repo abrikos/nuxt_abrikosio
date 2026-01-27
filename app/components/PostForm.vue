@@ -24,12 +24,12 @@ async function onSubmit() {
   } else {
     res = await useNuxtApp().$POST(`/posts`, post.value)
   }
-  if (!res.errors) {
+  if (res.id) {
     $q.notify({message: 'Success', color: 'green'});
-    if(!route.params.id) {
+    if(res.id) {
       navigateTo(`/post/edit-${res.id}`)
     }
-  }else{
+  }else if(res.errors){
     errors.value = res.errors
   }
 }
