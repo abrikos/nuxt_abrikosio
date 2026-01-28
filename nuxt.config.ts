@@ -2,13 +2,6 @@
 export default defineNuxtConfig({
   ssr: false,
   compatibilityDate: '2025-07-15',
-  // scripts: {
-  //   registry: {
-  //     googleTagManager: {
-  //       id: 'GTM-N6HSRSC9'
-  //     }
-  //   }
-  // },
   app:{
     head: {
       title: 'i.o.Abrikos',
@@ -64,5 +57,4 @@ export default defineNuxtConfig({
     lang: 'ru'
 
   },
-
 })
