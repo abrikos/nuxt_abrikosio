@@ -9,7 +9,7 @@ onMounted(load)
 </script>
 
 <template lang="pug">
-div.flex.justify-between
+div.flex
   div(v-for="post of posts")
     post-card(:post="post")
 </template>

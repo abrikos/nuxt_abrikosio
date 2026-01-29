@@ -54,7 +54,7 @@ div.post-card
 <style scoped lang="sass">
 .post-card
   cursor: pointer
-  width: 300px
+  width: 600px
 
 .text
   overflow: hidden
