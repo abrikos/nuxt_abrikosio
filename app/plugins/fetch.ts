@@ -5,8 +5,10 @@ import axios from 'axios'
 
 export default defineNuxtPlugin((_nuxtApp) => {
     const config = useRuntimeConfig()
+    const devMode = process.dev
     const $q = useQuasar()
     const {logout, setLoading, unsetLoading} = useCustomStore()
+
     function getHeaders(ct?: string | undefined) {
         const access_token = useCookie(config.public.authTokenName)
         return {
@@ -35,88 +37,91 @@ export default defineNuxtPlugin((_nuxtApp) => {
 
     instance.interceptors.response.use(
         (res) => {
-            process.dev && console.log(res.config.method, ':', res.config.url, res.data);
-            return res.data;
+            devMode && console.log(res.config.method, ':', res.config.url, res.data);
+            return typeof res.data === 'object' ? res.data : {};
         },
         (e) => {
-            if (e.status !== 401) {
-                if(Array.isArray(e.response.data.detail)) {
-                    for(const err of e.response.data.detail) {
-                        $q.notify({
-                            group: false,
-                            color: 'negative',
-                            icon: 'mdi-alert-circle',
-                            message:`${err.loc[1]}: ${err.msg}`,
-                            position: 'bottom-left',
-                        })
-                    }
-                }else{
-                    const message = e.status + ': ' +  (e.status>=500 ? e.response.statusText :e.response.data.detail );
-                    $q.notify({
-                        color: 'negative',
-                        icon: 'mdi-alert-circle',
-                        message,
-                        position: 'bottom-left',
-                    })
+            const error:{status:number,messages:string[]} = {status: 0, messages:[]}
+            switch (true) {
+                case e.status === 401:
+                    return
+                case e.status >= 500:
+                    error.messages = [e.statusText]
+                    error.status = e.status
+                    break
+                default:
+                    if (Array.isArray(e.response.data.detail)) {
+                        error.messages = e.response.data.detail.map((detail:any) => `${detail.loc[1]}: ${detail.msg}`)
 
-                }
+                    } else {
+                        error.messages = [e.status + ': ' + (e.status >= 500 ? e.response.statusText : e.response.data.detail)];
+
+                    }
             }
-            return {...e, error: e.response.data?.detail}
+            for (const message of error.messages) {
+                $q.notify({
+                    group: false,
+                    color: 'negative',
+                    icon: 'mdi-alert-circle',
+                    message,
+                    position: 'bottom-left',
+                })
+            }
+
         },
     );
 
 
-    const debug = process.dev
     const showResponse = false
     return {
         provide: {
             POST: async (path: string, body?: any): Promise<any> => {
                 setLoading()
-                if (debug) console.log('POST', path, body);
+                if (devMode) console.log('POST', path, body);
                 const res = await instance.post(path, body, {headers: getHeaders()})
-                if (res && debug && showResponse) console.log('POST response:', path, res)
+                if (res && devMode && showResponse) console.log('POST response:', path, res)
                 unsetLoading()
                 return res
             },
             UPLOAD: async (path: string, body?: any): Promise<any> => {
                 setLoading()
                 //await new Promise(resolve => setTimeout(resolve, 5000));
-                if (debug) console.log('UPLOAD', path, body);
+                if (devMode) console.log('UPLOAD', path, body);
                 const res = await instance.post(path, body, {headers: getHeaders('multipart/form-data')})
-                if (res && debug && showResponse) console.log('POST response:', path, res)
+                if (res && devMode && showResponse) console.log('POST response:', path, res)
                 unsetLoading()
                 return res
             },
             PATCH: async (path: string, body?: any): Promise<any> => {
                 setLoading()
                 //await new Promise(resolve => setTimeout(resolve, 5000));
-                if (debug) console.log('PATCH', path, body);
+                if (devMode) console.log('PATCH', path, body);
                 const res = await instance.patch(path, body, {headers: getHeaders()})
-                if (res && debug && showResponse) console.log('PATCH response:', path, res)
+                if (res && devMode && showResponse) console.log('PATCH response:', path, res)
                 unsetLoading()
                 return res
             },
             PUT: async (path: string, body?: any): Promise<any> => {
                 setLoading()
-                if (debug) console.log('PUT', path, body);
+                if (devMode) console.log('PUT', path, body);
                 const res = await instance.put(path, body, {headers: getHeaders()})
-                if (res && debug && showResponse) console.log('PUT response:', path, res)
+                if (res && devMode && showResponse) console.log('PUT response:', path, res)
                 unsetLoading()
                 return res
             },
             GET: async (path: string): Promise<any> => {
                 setLoading()
-                if (debug) console.log('GET', path);
+                if (devMode) console.log('GET', path);
                 let res = await instance.get(path, {headers: getHeaders()})
-                if (res && debug && showResponse) console.log('GET response:', path, res)
+                if (res && devMode && showResponse) console.log('GET response:', path, res)
                 unsetLoading()
                 return res
             },
             DELETE: async (path: string): Promise<any> => {
                 setLoading()
-                if (debug) console.log('DEL', path);
+                if (devMode) console.log('DEL', path);
                 const res = await instance.delete(path, {headers: getHeaders()})
-                if (res && debug && showResponse) console.log('DEL response:', path, res)
+                if (res && devMode && showResponse) console.log('DEL response:', path, res)
                 unsetLoading()
                 return res
             },
