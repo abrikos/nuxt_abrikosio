@@ -1,14 +1,15 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+const devMode = process.env.NODE_ENV === 'development'
 export default defineNuxtConfig({
   ssr: false,
   compatibilityDate: '2025-07-15',
   app:{
     head: {
-      title: 'i.o.Abrikos',
+      title: '{{ title }}',
       meta:[
-        { name: 'title', content: 'Abrikosio' },
+        { name: 'title', content: '{{ title }}' },
         { property: 'og:site_name', content: 'Abrikosio' },
-        { property: 'og:title', content: 'Blogs' },
+        { property: 'og:title', content: '{{ title }}' },
         { property: 'og:description', content: 'My blogs' },
         { name: 'description', content: 'My blogs' },
         { property: 'og:type', content: 'article' },
@@ -57,4 +58,9 @@ export default defineNuxtConfig({
     lang: 'ru'
 
   },
+  nitro: {
+    output: {
+      dir: '/home/abrikos/PycharmProjects/abrikosio/nuxt_static' // Change the main output directory from '.output' to 'mydir'
+    }
+  }
 })
