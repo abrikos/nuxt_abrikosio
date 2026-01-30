@@ -4,7 +4,7 @@ const email = ref('')
 const result = ref()
 
 async function submit() {
-  result.value = await useNuxtApp().$POST(`/user/request-restore-password`, {email:email.value})
+  result.value = await useNuxtApp().$POST(`/users/request-restore-password`, {email:email.value})
 }
 </script>
 

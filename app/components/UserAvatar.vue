@@ -3,7 +3,7 @@ interface Props {
   user?: object;
 }
 const {user} = defineProps<Props>()
-const noAvatar = '/no-avatar.png'
+const noAvatar = '/_nuxt/no-avatar.png'
 const avatar = computed(() => {
   return user?.avatar ? user.avatar : noAvatar
 })
@@ -12,7 +12,7 @@ const avatar = computed(() => {
 
 <template lang="pug">
     q-avatar(v-if="user" square)
-      img(:src="avatar" :onerror="`this.src='${noAvatar}'`")
+      img(:src="avatar")
       q-tooltip {{user?.nickname}}
 </template>
 

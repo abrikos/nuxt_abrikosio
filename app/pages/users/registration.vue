@@ -14,7 +14,7 @@ async function submit() {
     if (res?.errors) {
       console.log(res)
       errors.value = res.errors
-      //navigateTo('/user/cabinet')
+      //navigateTo('/users/cabinet')
     }
 }
 

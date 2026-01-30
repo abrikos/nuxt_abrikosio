@@ -14,6 +14,12 @@ async function load() {
   }
 }
 
+watch(()=>route.params.id, (value) => {
+  if(!value) {
+    post.value = {}
+  }
+})
+
 onMounted(load)
 const errors = ref({})
 async function onSubmit() {
@@ -22,12 +28,12 @@ async function onSubmit() {
   if (route.params.id) {
     res = await useNuxtApp().$PATCH(`/posts/${route.params.id}`, post.value)
   } else {
-    res = await useNuxtApp().$POST(`/posts`, post.value)
+    res = await useNuxtApp().$POST(`/posts/`, post.value)
   }
   if (res.id) {
     $q.notify({message: 'Success', color: 'green'});
     if(res.id) {
-      navigateTo(`/post/edit-${res.id}`)
+      navigateTo(`/posts/edit/${res.id}`)
     }
   }else if(res.errors){
     errors.value = res.errors
@@ -71,7 +77,7 @@ async function onReset() {
             q-btn(type="submit" color="primary" :flat="false" :label="route.params.id ? 'Save':'Create'")
             q-btn(type="reset" :flat="false" label="Reset" v-if="route.params.id")
     div.col-sm
-      router-link(:to="`/post/${route.params.id}`") View Post
+      router-link(:to="`/posts/${route.params.id}`") View Post
       div.preview
         post-view(:post="post")
 

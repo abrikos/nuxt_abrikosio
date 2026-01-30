@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const {params} = useRoute()
-const data = await useNuxtApp().$POST(`/user/process-restore-password`, params)
+const data = await useNuxtApp().$POST(`/users/process-restore-password`, params)
 </script>
 
 <template lang="pug">

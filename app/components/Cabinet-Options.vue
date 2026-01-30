@@ -6,12 +6,9 @@ const {$event} = useNuxtApp()
 const {loggedUser} = storeToRefs(useCustomStore())
 const {getMe} = useCustomStore()
 const $q = useQuasar()
-async function updateUser(deleteAvatar:boolean) {
+async function updateUser() {
   if (!loggedUser.value) return;
-  if(deleteAvatar){
-    loggedUser.value.avatar = undefined;
-  }
-  const res = await useNuxtApp().$PATCH(`/users/${loggedUser.value.id}`, loggedUser.value);
+  const res = await useNuxtApp().$PATCH(`/users/${loggedUser.value.id}/`, loggedUser.value);
   if(!res.error) {
     $q.notify({message: 'Success', color: 'green'});
   }

@@ -10,7 +10,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         if(!loggedUser) {
             setRedirect(to.fullPath)
             console.log('TO login')
-            return '/user/login';
+            return '/users/login';
         }
     } else if (loggedUser) {
         return redirect;

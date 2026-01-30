@@ -10,10 +10,10 @@ export default defineNuxtConfig({
         { name: 'title', content: '{{ title }}' },
         { property: 'og:site_name', content: 'Abrikosio' },
         { property: 'og:title', content: '{{ title }}' },
-        { property: 'og:description', content: 'My blogs' },
-        { name: 'description', content: 'My blogs' },
+        { property: 'og:description', content: '{{short}}' },
+        { name: 'description', content: '{{hort}}' },
         { property: 'og:type', content: 'article' },
-        { property: 'og:image', content: 'https://abrikosio.ru/logo.png' },
+        { property: 'og:image', content: '{{poster}}' },
       ]
     }
   },

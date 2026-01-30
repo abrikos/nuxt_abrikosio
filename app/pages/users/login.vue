@@ -10,7 +10,7 @@ async function submit() {
   error.value = await login(user.value)
 }
 onMounted(()=>{
-  if(loggedUser) {navigateTo('/user/cabinet')}
+  if(loggedUser) {navigateTo('/users/cabinet')}
 })
 
 function reset() {
@@ -30,9 +30,9 @@ q-card.q-pa-sm
       q-btn.full-width(type="submit" label="Вход" color="primary" :flat="false")
     q-card-section
       div
-        router-link(to="/user/registration") Зарегистрироваться
+        router-link(to="/users/registration") Зарегистрироваться
       div
-        router-link(to="/user/password-restore") Восстановить пароль
+        router-link(to="/users/password-restore") Восстановить пароль
     q-card-section.text-red {{error?.error}}
 </template>
 

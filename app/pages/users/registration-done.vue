@@ -2,7 +2,7 @@
 const code = ref()
 
 async function send() {
-  const res = await useNuxtApp().$GET('/user/registration-code/' + code.value)
+  const res = await useNuxtApp().$GET('/users/registration-code/' + code.value)
   if (res) navigateTo('/')
 }
 </script>

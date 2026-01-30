@@ -29,19 +29,19 @@ export const useCustomStore = defineStore('auth', {
 
 
         async login(credentials: UserPayloadInterface) {
-            const token = await useNuxtApp().$POST(`/auth/login`, credentials)
-            if (token.error) return token;
-            navigateTo(this.redirect)
+            const token = await useNuxtApp().$POST(`/users/login/`, credentials)
+            if(token?.id) {
+                navigateTo(this.redirect)
+            }
         },
         async signup(credentials: UserPayloadInterface) {
-            const user = await useNuxtApp().$POST('/auth/registration', credentials) as UserPayloadInterface
-            if (user && user.id) {
+            const user = await useNuxtApp().$POST('/users/', credentials) as UserPayloadInterface
+            if (user?.id) {
                 await this.login(credentials);
             }
-            return user;
         },
         async getMe() {
-            const user = await useNuxtApp().$GET('/auth/me') as UserPayloadInterface
+            const user = await useNuxtApp().$GET('/users/me/') as UserPayloadInterface
             if (user?.id) {
                 this.loggedUser = user;
                 return this.loggedUser;

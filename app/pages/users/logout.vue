@@ -3,7 +3,7 @@ import {useCustomStore} from "~/store/custom-store";
 
 const {logout} = useCustomStore();
 logout()
-navigateTo('/user/login')
+navigateTo('/users/login')
 </script>
 
 <template>

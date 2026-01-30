@@ -29,7 +29,7 @@ async function load() {
     return navigateTo('/')
   }
   rate.value = post.value.rate
-  setHeaders()
+  //setHeaders()
 }
 
 const submitRate = async () => {
@@ -43,7 +43,7 @@ onMounted(load)
 <template lang="pug">
   div(v-if="post")
     q-bar(dense)
-      q-btn(size="sm" icon="mdi-pencil" v-if="loggedUser?.id === post.user.id" :to="`/post/edit-${post.id}`" flat)
+      q-btn(size="sm" icon="mdi-pencil" v-if="loggedUser?.id === post.user.id" :to="`/posts/edit/${post.id}`" flat)
       q-space
       q-rating(v-model="rate" @click="submitRate" max="5" icon="mdi-star-outline" color="red" size="sm" icon-selected="mdi-star"  icon-half="mdi-star-half-full")
       q-space

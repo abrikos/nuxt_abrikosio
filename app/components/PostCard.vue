@@ -20,9 +20,9 @@ const canEdit = computed(()=>loggedUser?.is_admin || loggedUser?.id === post.use
 
 <template lang="pug">
 div.post-card
-  q-card.q-ma-sm.bg-grey-4(@click="navigateTo(`/post/${post.id}`)")
+  q-card.q-ma-sm.bg-grey-4(@click="navigateTo(`/posts/${post.id}`)")
     div.q-pa-sm.flex.items-center.justify-between.no-wrap(color="primary")
-      q-btn(size="sm" icon="mdi-pencil" v-if="canEdit" :to="`/post/edit-${post.id}`" flat)
+      q-btn(size="sm" icon="mdi-pencil" v-if="canEdit" :to="`/posts/edit/${post.id}`" flat)
       div
         span.text-blue  {{ post.title }}
         div

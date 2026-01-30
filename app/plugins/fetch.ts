@@ -41,6 +41,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
             return typeof res.data === 'object' ? res.data : {};
         },
         (e) => {
+            devMode && console.log(e.response);
             const error:{status:number,messages:string[]} = {status: 0, messages:[]}
             switch (true) {
                 case e.status === 401:
@@ -54,7 +55,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
                         error.messages = e.response.data.detail.map((detail:any) => `${detail.loc[1]}: ${detail.msg}`)
 
                     } else {
-                        error.messages = [e.status + ': ' + (e.status >= 500 ? e.response.statusText : e.response.data.detail)];
+                        error.messages = [e.status + ': ' + JSON.stringify(e.response.data)];
 
                     }
             }

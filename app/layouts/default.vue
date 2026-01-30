@@ -15,7 +15,7 @@
           q-item-section
             q-item-label {{ link.title }}
             q-item-label( caption) {{ link.caption }}
-        q-item(v-if="loggedUser" clickable tag="a"  to="/user/cabinet")
+        q-item(v-if="loggedUser" clickable tag="a"  to="/users/cabinet")
           q-item-section(avatar)
             user-avatar(:user="loggedUser")
           q-item-section
@@ -61,27 +61,27 @@ const menuItems = computed(() => {
       title: 'Add post',
       caption: 'Create post',
       icon: 'mdi-pencil',
-      link: '/post/create',
+      link: '/posts/edit',
       show: loggedUser.value?.publisher
     },
     {
       title: 'Sign out',
       caption: '',
       icon: 'mdi-logout',
-      link: '/user/logout',
+      link: '/users/logout',
       show: loggedUser.value
     },
     {
       title: 'Login',
       caption: '',
       icon: 'mdi-login',
-      link: '/user/login',
+      link: '/users/login',
       show: !loggedUser.value
     },{
       title: 'Registration',
       caption: '',
       icon: 'mdi-login',
-      link: '/user/registration',
+      link: '/users/registration',
       show: !loggedUser.value
     }
   ]
